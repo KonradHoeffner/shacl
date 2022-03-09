@@ -1,0 +1,20 @@
+name: test
+ 
+on:
+  workflow_dispatch:
+  push:
+    branches:
+      - master
+ 
+jobs:
+  test:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v2
+
+      - name: Build and Validate
+        uses: ./
+        with:
+          shacl: test/shacl.ttl
+          data: test/data.ttl

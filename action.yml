@@ -1,0 +1,32 @@
+name: 'Validate SHACL'
+description: 'This action will validate an RDF graph against a SHACL graph using pySHACL'
+author: 'Konrad Höffner <konrad@gmx.at>'
+inputs:
+  data:
+    description: 'The file containing the target data graph'
+    required: true
+  shacl:
+    description: 'The file containing the SHACL Shapes graph'
+    required: true
+    default: shacl.ttl
+  inference:
+    description: 'type of inferencing to run against the data graph before validating'
+outputs:
+  violations:
+    description: 'Number of violations'
+    value: ${{ steps.validate.outputs.violations}}
+runs:
+  using: 'composite'
+  steps:
+    - run: pip install pyshacl==0.18.1
+      shell: bash
+    - id: validate
+      shell: bash {0}
+      run: |
+        log=$(pyshacl -a -s ${{ inputs.shacl}} ${{ inputs.data}})
+        violations=$(grep -c 'Constraint Violation' <<< "$log")
+        echo $log
+        echo "::set-output name=violations::$violations"
+branding:
+  icon: 'check-square'
+  color: 'white'
