@@ -31,6 +31,9 @@ runs:
       run: |
         log=$(pyshacl -a -s ${{ inputs.shacl}} ${{ inputs.data}})
         violations=$(grep -c 'Constraint Violation' <<< "$log")
+        log="${log//'%'/'%25'}"
+        log="${log//$'\n'/'%0A'}"
+        log="${log//$'\r'/'%0D'}"
         if [[ "$violations" -gt 0 ]]; then echo "::warning ::$log"; fi
         echo $log
         echo "::set-output name=violations::$violations"
