@@ -7,7 +7,7 @@ on:
       - master
  
 jobs:
-  test:
+  test-correct:
     runs-on: ubuntu-latest
     steps:
       - name: Checkout code
@@ -17,6 +17,11 @@ jobs:
         with:
           shacl: test/shacl.ttl
           data: test/data-correct.ttl
+  test-incorrect:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v2
       - name: Test incorrect RDF graph
         uses: ./
         with:
