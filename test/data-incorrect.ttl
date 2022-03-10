@@ -1,0 +1,14 @@
+@prefix : <http://example.com/>.
+
+:Jane a :Human;
+	:prename "Jane"@en;
+	:surname "Janesen"@en;
+	:friend :John.
+	
+:John a :Human;
+	:prename "John"@en;
+	:surname "Johnson"@en;
+	:friend :Jane, :Bella.
+
+:Bella a :Dog;
+	:prename "Bella".

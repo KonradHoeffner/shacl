@@ -1,0 +1,23 @@
+@prefix : <http://example.com/>.
+@prefix rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#> .
+@prefix sh:<http://www.w3.org/ns/shacl#>.
+
+:HumanShape a sh:NodeShape;
+	sh:targetClass :Human;
+	sh:property [sh:path :prename],
+		[sh:path :surname],
+		[sh:path :friend],
+		[sh:path rdf:type];
+	sh:closed true.
+
+:HumanDomainShape a sh:NodeShape;
+	sh:targetSubjectsOf
+		:prename,
+		:surename,
+		:friend;
+	sh:class :Human.
+
+:HumanRangeShape a sh:NodeShape;
+	sh:targetObjectsOf
+		:friend;
+	sh:class :Human.

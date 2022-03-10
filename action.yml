@@ -18,13 +18,20 @@ outputs:
 runs:
   using: 'composite'
   steps:
-    - run: pip install pyshacl==0.18.1
+    - uses: actions/setup-python@v3
+      if: ${{ !env.ACT }}
+      with:
+        python-version: '3.x'
+        cache: 'pip'
+    - name: Install pySHACL
+      run: pip install -r requirements.txt
       shell: bash
     - id: validate
       shell: bash {0}
       run: |
         log=$(pyshacl -a -s ${{ inputs.shacl}} ${{ inputs.data}})
         violations=$(grep -c 'Constraint Violation' <<< "$log")
+        if [[ "$violations" -gt 0 ]]; then echo "::warning ::$log"; fi
         echo $log
         echo "::set-output name=violations::$violations"
 branding:

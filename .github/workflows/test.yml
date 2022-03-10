@@ -12,9 +12,13 @@ jobs:
     steps:
       - name: Checkout code
         uses: actions/checkout@v2
-
-      - name: Build and Validate
+      - name: Test correct RDF graph
         uses: ./
         with:
           shacl: test/shacl.ttl
-          data: test/data.ttl
+          data: test/data-correct.ttl
+      - name: Test incorrect RDF graph
+        uses: ./
+        with:
+          shacl: test/shacl.ttl
+          data: test/data-incorrect.ttl
