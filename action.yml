@@ -14,29 +14,14 @@ inputs:
 outputs:
   violations:
     description: 'Number of violations'
-    value: ${{ steps.validate.outputs.violations}}
+#    value: ${{ steps.validate.outputs.violations}}
 runs:
-  using: 'composite'
-  steps:
-    - uses: actions/setup-python@v3
-      if: ${{ !env.ACT }}
-      with:
-        python-version: '3.x'
-        cache: 'pip'
-    - name: Install pySHACL
-      run: pip install -r requirements.txt
-      shell: bash
-    - id: validate
-      shell: bash {0}
-      run: |
-        log=$(pyshacl -a -s ${{ inputs.shacl}} ${{ inputs.data}})
-        violations=$(grep -c 'Constraint Violation' <<< "$log")
-        log="${log//'%'/'%25'}"
-        log="${log//$'\n'/'%0A'}"
-        log="${log//$'\r'/'%0D'}"
-        if [[ "$violations" -gt 0 ]]; then echo "::warning ::$log"; fi
-        echo $log
-        echo "::set-output name=violations::$violations"
+  using: 'docker'
+  image: 'Dockerfile'
+  args:
+    - ${{ inputs.shacl }}
+    - ${{ inputs.data }}
+    - ${{ inputs.inference }}
 branding:
   icon: 'check-square'
   color: 'white'
