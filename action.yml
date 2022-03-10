@@ -14,7 +14,6 @@ inputs:
 outputs:
   violations:
     description: 'Number of violations'
-#    value: ${{ steps.validate.outputs.violations}}
 runs:
   using: 'docker'
   image: 'Dockerfile'
