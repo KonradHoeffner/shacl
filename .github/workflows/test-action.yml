@@ -1,8 +1,11 @@
-name: test
+name: Test Action
  
 on:
   workflow_dispatch:
   push:
+    branches:
+      - master
+  pull_request_target:
     branches:
       - master
  
@@ -12,7 +15,7 @@ jobs:
     steps:
       - name: Checkout code
         uses: actions/checkout@v2
-      - name: Test correct RDF graph
+      - name: This should succeed
         uses: ./
         with:
           shacl: test/shacl.ttl
@@ -22,7 +25,7 @@ jobs:
     steps:
       - name: Checkout code
         uses: actions/checkout@v2
-      - name: Test incorrect RDF graph
+      - name: This should fail
         uses: ./
         with:
           shacl: test/shacl.ttl
