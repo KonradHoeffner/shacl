@@ -31,6 +31,8 @@ jobs:
         continue-on-error: true
         with:
           shacl: test/shacl.ttl
-          data: test/data-incorrect.ttl
+          data: |
+                test/data-correct.ttl
+                test/data-incorrect.ttl
       - name: Invert success and failure
         run: if [[ ${{ steps.shacl-incorrect.outcome }} == "failure" ]]; then exit 0; else exit 1; fi
