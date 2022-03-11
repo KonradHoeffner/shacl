@@ -1,6 +1,7 @@
 # SHACL GitHub action
 
 This action will validate an RDF graph against a SHACL graph using [pySHACL](https://github.com/RDFLib/pySHACL).
+It is under construction, will undergo changes and is not yet released.
 
 ## Use
 
@@ -22,7 +23,7 @@ jobs:
       - name: Checkout code
         uses: actions/checkout@v2
       - name: Validate against SHACL shape
-        uses: konradhoeffner/shacl@v1
+        uses: konradhoeffner/shacl@master
         with:
           shacl: myshaclfile.ttl
           data: mydatafile.ttl  
