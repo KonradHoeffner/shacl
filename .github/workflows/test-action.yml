@@ -26,7 +26,11 @@ jobs:
       - name: Checkout code
         uses: actions/checkout@v2
       - name: This should fail
+        id: shacl-incorrect
         uses: ./
+        continue-on-error: true
         with:
           shacl: test/shacl.ttl
           data: test/data-incorrect.ttl
+      - name: Invert success and failure
+        run: if [[ ${{ steps.shacl-incorrect.outcome }} == "failure" ]]; then exit 0; else exit 1; fi
