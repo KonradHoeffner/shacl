@@ -1,5 +1,5 @@
 FROM python:3-slim
-RUN pip install pyshacl==0.18.1
+RUN pip install pyshacl==0.19.0
 
 WORKDIR /usr/src/app
 COPY entrypoint.sh .
