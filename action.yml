@@ -7,20 +7,25 @@ inputs:
     required: true
   shacl:
     description: 'The file containing the SHACL Shapes graph'
-    required: true
+    required: false
     default: shacl.ttl
   inference:
     description: 'type of inferencing to run against the data graph before validating'
+  image:
+    description: 'The Docker image running pySHACL with the given inputs'
+    required:  false
+    default: ghcr.io/konradhoeffner/shacl@master
 outputs:
   violations:
     description: 'Number of violations'
 runs:
   using: 'docker'
-  image: 'Dockerfile'
+  image: ${{ github.event.inputs.image }}
   args:
     - ${{ inputs.shacl }}
     - ${{ inputs.data }}
     - ${{ inputs.inference }}
+    - ${{ inputs.image}}
 branding:
   icon: 'check-square'
   color: 'white'
