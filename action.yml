@@ -9,6 +9,10 @@ inputs:
     description: 'The file containing the SHACL Shapes graph'
     required: false
     default: shacl.ttl
+  merge:
+    description: 'Whether to merge the input files before validation if there are multiple.'
+    required: false
+    default: false
   inference:
     description: 'type of inferencing to run against the data graph before validating'
 outputs:
@@ -20,6 +24,7 @@ runs:
   args:
     - ${{ inputs.shacl }}
     - ${{ inputs.data }}
+    - ${{ inputs.merge }}
     - ${{ inputs.inference }}
 branding:
   icon: 'check-square'
