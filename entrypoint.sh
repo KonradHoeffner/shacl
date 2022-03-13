@@ -28,7 +28,7 @@ do
 done <<< "$data"
 echo "::set-output name=violations::$violations_total"
 
-if [[ "$violations" -eq 0 ]]
+if [[ "$violations_total" -eq 0 ]]
 then
 	exit 0
 else
