@@ -3,12 +3,10 @@ name: Test Action
 on:
   workflow_dispatch:
   push:
-    branches:
-      - master
+    branches: ['master']
   pull_request_target:
-    branches:
-      - master
- 
+    branches: ['master']
+
 jobs:
   test-correct:
     runs-on: ubuntu-latest
@@ -20,7 +18,6 @@ jobs:
         with:
           shacl: test/shacl.ttl
           data: test/data-correct.ttl
-          image: 'Dockerfile'
   test-incorrect:
     runs-on: ubuntu-latest
     steps:
@@ -35,6 +32,5 @@ jobs:
           data: |
                 test/data-correct.ttl
                 test/data-incorrect.ttl
-          image: 'Dockerfile'
       - name: Invert success and failure
         run: if [[ ${{ steps.shacl-incorrect.outcome }} == "failure" ]]; then exit 0; else exit 1; fi
