@@ -1,5 +1,7 @@
 # SHACL GitHub action
 
+[![SHACL status](https://github.com/konradhoeffner/shacl/actions/workflows/test-action.yml/badge.svg)](https://github.com/konradhoeffner/shacl/actions/workflows/test-action.yml)
+
 This action will validate an RDF graph against a SHACL graph using [pySHACL](https://github.com/RDFLib/pySHACL).
 It is under construction, will undergo changes and is not yet released.
 
@@ -21,7 +23,7 @@ jobs:
     runs-on: ubuntu-latest 
     steps:  
       - name: Checkout code
-        uses: actions/checkout@v2
+        uses: actions/checkout@v3
       - name: Validate against SHACL shape
         uses: konradhoeffner/shacl@master
         with:
@@ -39,6 +41,9 @@ The first test step is designed to succeed, the second is designed to fail with 
 
 ## Add SHACL badge in your repository README
 
-You can show the SHACL validation status with a badge in your README.
+You can show the SHACL validation status with a badge in your README like this:
 
-TODO
+
+```
+[![SHACL status](https://github.com/username/reponame/actions/workflows/workflowname.yml/badge.svg)](https://github.com/username/reponame/actions/workflows/workflowname.yml)
+```
