@@ -2,25 +2,30 @@ name: 'Validate SHACL'
 description: 'This action will validate an RDF graph against a SHACL graph using pySHACL'
 author: 'Konrad Höffner <konrad@gmx.at>'
 inputs:
-  data:
-    description: 'The file containing the target data graph'
-    required: true
   shacl:
     description: 'The file containing the SHACL Shapes graph'
     required: false
     default: shacl.ttl
+  data:
+    description: 'The files containing the target data graph, separated by newlines'
+    required: true
   inference:
-    description: 'type of inferencing to run against the data graph before validating'
+    description: 'Type of inferencing to run against the data graph before validating'
 outputs:
   violations:
     description: 'Number of violations'
 runs:
-  using: 'docker'
-  image: docker://ghcr.io/konradhoeffner/shacl:master
-  args:
-    - ${{ inputs.shacl }}
-    - ${{ inputs.data }}
-    - ${{ inputs.inference }}
+  using: 'composite'
+  steps:
+    - uses: actions/setup-python@v4
+      with:
+        python-version: '3'
+        cache: 'pip'
+        cache-dependency-path: "${{ github.action_path }}/requirements.txt"
+    - run: pip install pyshacl -r ${{ github.action_path }}/requirements.txt
+      shell: bash
+    - run: ${{ github.action_path }}/entrypoint.sh "${{ inputs.shacl }}" "${{ inputs.data }}" "${{ inputs.inference }}"
+      shell: bash
 branding:
   icon: 'check-square'
   color: 'white'
