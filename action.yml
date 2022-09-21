@@ -20,9 +20,11 @@ runs:
     - uses: actions/setup-python@v4
       with:
         python-version: '3'
-        cache: 'pip'
-        cache-dependency-path: "${{ github.action_path }}/requirements.txt"
-    - run: pip install pyshacl -r ${{ github.action_path }}/requirements.txt
+    - uses: actions/cache@v3
+      with:
+        path: ~/.cache/pip
+        key: ${{ runner.os }}-pip
+    - run: pip install 'pyshacl<2'
       shell: bash
     - run: ${{ github.action_path }}/entrypoint.sh "${{ inputs.shacl }}" "${{ inputs.data }}" "${{ inputs.inference }}"
       shell: bash
