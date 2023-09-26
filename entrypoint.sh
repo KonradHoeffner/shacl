@@ -26,7 +26,7 @@ do
 		exit 1
 	fi
 done <<< "$data"
-echo "::set-output name=violations::$violations_total"
+echo "{violations}={$violations_total}" >> $GITHUB_OUTPUT
 
 if [[ "$violations_total" -eq 0 ]]
 then
